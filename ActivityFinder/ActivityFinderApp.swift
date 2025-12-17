@@ -10,6 +10,9 @@ import SwiftUI
 @main
 struct ActivityFinderApp: App {
     var body: some Scene {
+        
+        @State var viewModel = ActivityViewModel()
+       
         WindowGroup {
             ContentView()
         }
