@@ -4,7 +4,7 @@
 //
 //  Created by William J. Baik on 1/16/26.
 //
-import SwfitUI
+import SwiftUI
 
 struct Onboard: View {
     @State var navigateToLogin = false
@@ -18,7 +18,7 @@ struct Onboard: View {
                 Image (systemName: "ActivityFinderLogo")
                 
                 Button {
-                    navigationToLogin = true
+                    navigateToLogin = true
                 } label: {
                     Text("Login")
                 }
