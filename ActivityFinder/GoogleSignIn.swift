@@ -7,19 +7,54 @@
 
 import SwiftUI
 
-
 struct GoogleSignInView: View {
+    var authManager: AuthenticationManager
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 30) {
+            Spacer()
+            
+            VStack(spacing: 10) {
+                Image("ActivityFinderLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.blue)
+                
+                Text("Activity Finder")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Text("Connect with your school community")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+            Text("Use your school Google account to sign in")
+                .foregroundColor(.gray)
+            Button(action: {
+                authManager.signInWithGoogle()
+            }) {
+                HStack {
+                    
+                    Text("Sign in with Google")
+                    
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(Color.blue)
+                .cornerRadius(10)
+            }
+            .padding(.horizontal, 40)
+            
+            
+            
+            Spacer()
         }
-        .padding()
     }
 }
 
 #Preview {
-    GoogleSignInView()
+    GoogleSignInView(authManager: AuthenticationManager())
 }
