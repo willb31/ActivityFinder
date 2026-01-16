@@ -4,7 +4,7 @@
 //
 //  Created by William J. Baik on 1/16/26.
 //
-Import SwfitUI
+import SwfitUI
 
 struct Onboard: View {
     @State var navigateToLogin = false
@@ -15,7 +15,7 @@ struct Onboard: View {
             VStack {
                 Text("Activity Finder")
                 
-                Image (systemName: "HerseyHuskie") //logo is a placeholder until we create speical logo
+                Image (systemName: "ActivityFinderLogo")
                 
                 Button {
                     navigationToLogin = true
