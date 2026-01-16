@@ -8,12 +8,22 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import FirebaseAuth
 
 @main
 struct ActivityFinder: App {
     
     init(){
         FirebaseApp.configure()
+        
+        Auth.auth().signInAnonymously { result, error in
+            if let error = error {
+                print("error")
+            }
+            else {
+                print("Signed in")
+            }
+        }
     }
     var body: some Scene {
         WindowGroup {
