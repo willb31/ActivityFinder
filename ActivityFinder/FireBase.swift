@@ -8,16 +8,17 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import FirebaseAuth
 
 @main
 struct ActivityFinder: App {
     
     init(){
         FirebaseApp.configure()
-    }
+        }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GoogleSignInView(authManager: AuthenticationManager())
                 .onOpenURL {url in GIDSignIn.sharedInstance.handle(url)}
         }
     }
