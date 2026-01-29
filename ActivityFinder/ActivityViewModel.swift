@@ -10,14 +10,17 @@ import FirebaseAuth
 import FirebaseFirestore
 import GoogleSignIn
 import FirebaseCore
+import Firebase 
 
 
 @Observable class AuthenticationManager{
     var user: User?
     var isAuthenticated = false
     var isAdmin = false
-    let database = Firestore.firestore()
-    
+    var database: Firestore {
+            Firestore.firestore()
+        }
+        
     init() {
         checkAuthStatus()
     }
@@ -42,10 +45,10 @@ import FirebaseCore
         
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
             
-            if let error = error {
-                print("Error signing in")
-                return
-            }
+//            if let error = error {
+//                print("Error signing in")
+//                return
+//            }
             
             guard let user = result?.user,
                   let idToken = user.idToken?.tokenString else {
@@ -55,10 +58,10 @@ import FirebaseCore
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,accessToken: user.accessToken.tokenString)
             
             Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    print("Firebase sign in error")
-                    return
-                }
+//                if let error = error {
+//                    print("Firebase sign in error")
+//                    return
+//                }
                 
                 guard let firebaseUser = authResult?.user else { return }
                 
@@ -116,6 +119,10 @@ import FirebaseCore
         }
     }
     func signOut(){
-        
+        try? Auth.auth().signOut()
+            GIDSignIn.sharedInstance.signOut()
+            user = nil
+            isAuthenticated = false
+            isAdmin = false
     }
 }
