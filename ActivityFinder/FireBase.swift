@@ -13,13 +13,16 @@ import FirebaseAuth
 @main
 struct ActivityFinder: App {
     
-    init(){
+    init() {
         FirebaseApp.configure()
-        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            GoogleSignInView(authManager: AuthenticationManager())
-                .onOpenURL {url in GIDSignIn.sharedInstance.handle(url)}
+            RootView()
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }
