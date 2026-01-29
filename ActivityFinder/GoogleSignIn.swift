@@ -6,6 +6,13 @@
 //
 
 import SwiftUI
+import Foundation
+import FirebaseAuth
+import FirebaseFirestore
+import GoogleSignIn
+import FirebaseCore
+import Firebase
+
 
 struct GoogleSignInView: View {
     var authManager: AuthenticationManager
@@ -51,6 +58,10 @@ struct GoogleSignInView: View {
             
             
             Spacer()
+            Button("Clear Sign-In") {
+                GIDSignIn.sharedInstance.signOut()
+                try? Auth.auth().signOut()
+            }
         }
     }
 }
