@@ -35,7 +35,7 @@ struct ClubCardView: View {
             
         }
         .padding(20)
-               .frame(maxWidth: .infinity, minHeight: 180, alignment: .topLeading)
+               .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
                .background(
                    RoundedRectangle(cornerRadius: 16)
                        .fill(Color(.systemBackground))
