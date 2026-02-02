@@ -37,9 +37,31 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-           Spacer()
-           Text("hello, \(authManager.user?.displayName ?? "User")!")
             Spacer()
+            
+           Text("hello, \(authManager.user?.displayName ?? "User")!")
+            
+            Spacer()
+//            ZStack{
+//                RoundedRectangle(cornerRadius: 10)
+//                    .frame(width: 200, height: 100, alignment: .bottom)
+//                    .foregroundStyle(.orange)
+//                    .border(.brown, width: 5)
+//                VStack{
+//                    Text("Club Name: Fake Club")
+//                        .frame(width: 180, height: 15, alignment: .topLeading)
+//                    Text("Small Description")
+//                        .frame(width: 190, height: 35, alignment: .top)
+//                    Button("Click to Expand ->"){
+//                        
+//                    }
+//                        
+//                }
+//                .frame(width: 200, height: 100)
+//                .foregroundStyle(.white)
+//                .font(.headline)
+//            }
+            
             Button("Clear Sign-In") {
                 GIDSignIn.sharedInstance.signOut()
                 try? Auth.auth().signOut()
