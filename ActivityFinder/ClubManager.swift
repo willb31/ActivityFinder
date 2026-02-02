@@ -24,7 +24,22 @@ import FirebaseFirestore
         database.collection("clubs").getDocuments { snapshot, error in
             self.isLoading = false
             
+            guard let documents = snapshot?.documents else {
+                          self.errorMessage = "No clubs found"
+                          print("No clubs in database")
+                          return
+                      }
             
+            self.clubs = documents.compactMap { document in
+                          do {
+                              let club = try document.data(as: Club.self)
+                              print("Loaded club: \(club.name)")
+                              return club
+                          } catch {
+                              print("Error loading club \(document.documentID): \(error)")
+                              return nil
+                          }
+                      }
             
         }
     }
