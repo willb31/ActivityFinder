@@ -22,16 +22,28 @@ struct ClubCardView: View {
             Text(club.name)
                 .font(.headline)
                 .bold()
+                .foregroundColor(.primary)
             
            
             Text(club.description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .lineLimit(3)
+                .multilineTextAlignment(.leading)
+            
+            
+            
         }
-        .padding()
-        .frame(maxWidth: .infinity, minHeight: 120)
-        .background(Color.gray.opacity(0.3))
-        .cornerRadius(10)
+        .padding(20)
+               .frame(maxWidth: .infinity, minHeight: 180, alignment: .topLeading)
+               .background(
+                   RoundedRectangle(cornerRadius: 16)
+                       .fill(Color(.systemBackground))
+                       .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+               )
+               .overlay(
+                   RoundedRectangle(cornerRadius: 16)
+                       .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+               )
     }
 }
