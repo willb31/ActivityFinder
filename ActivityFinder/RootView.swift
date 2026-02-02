@@ -12,7 +12,7 @@ struct RootView: View {
     
     var body: some View {
         if authManager.isAuthenticated {
-            ContentView()
+            ContentView(authManager: authManager)
         } else {
             GoogleSignInView(authManager: authManager)  
         }

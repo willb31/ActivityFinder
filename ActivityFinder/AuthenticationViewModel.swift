@@ -17,11 +17,13 @@ import Firebase
     var user: User?
     var isAuthenticated = false
     var isAdmin = false
+    var clubs: [Club] = []
     var database: Firestore {
             Firestore.firestore()
         }
         
     init() {
+        fetchClubs()
         checkAuthStatus()
     }
     
@@ -45,10 +47,7 @@ import Firebase
         
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
             
-//            if let error = error {
-//                print("Error signing in")
-//                return
-//            }
+
             
             guard let user = result?.user,
                   let idToken = user.idToken?.tokenString else {
@@ -58,10 +57,7 @@ import Firebase
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,accessToken: user.accessToken.tokenString)
             
             Auth.auth().signIn(with: credential) { authResult, error in
-//                if let error = error {
-//                    print("Firebase sign in error")
-//                    return
-//                }
+
                 
                 guard let firebaseUser = authResult?.user else { return }
                 
@@ -100,11 +96,8 @@ import Firebase
                 ]
                 
                 userReference.setData(userData) { error in
-                    if let error = error {
-                        print("Error creating user document")
-                    } else {
+                   
                         self.isAdmin = false
-                    }
                 }
             }
         }
@@ -119,10 +112,27 @@ import Firebase
         }
     }
     func signOut(){
-        try? Auth.auth().signOut()
+        
             GIDSignIn.sharedInstance.signOut()
             user = nil
             isAuthenticated = false
             isAdmin = false
     }
+    func fetchClubs() {
+            database.collection("clubs").addSnapshotListener { snapshot, error in
+                guard let documents = snapshot?.documents else { return }
+
+                self.clubs = documents.map { doc in
+                    Club(
+                        id: doc.documentID,
+                        name: doc["_clubName"] as? String ?? "",
+                        description: doc["description"] as? String ?? "",
+                        location: doc["location"] as? String ?? "",
+                        clubPhoto: doc["clubPhoto"] as? String ?? "",
+                        leaders: doc["leaders"] as? String ?? "",
+                        
+                    )
+                }
+            }
+        }
 }
