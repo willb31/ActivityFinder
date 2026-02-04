@@ -18,21 +18,27 @@ struct ClubCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-          
-            Text(club.name)
-                .font(.headline)
-                .bold()
-                .foregroundColor(.primary)
-            
-           
+            HStack{
+                
+                
+                Text(club.name)
+                    .font(.headline)
+                    .bold()
+                    .foregroundColor(.primary)
+              
+                Spacer()
+                
+                Text(club.category)
+                  
+                
+            }
             Text(club.description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
             
-            Text(club.category)
-            
+           
             
         }
         .padding(20)
