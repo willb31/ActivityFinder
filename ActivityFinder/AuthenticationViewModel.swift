@@ -130,6 +130,7 @@ import Firebase
                         location: doc["location"] as? String ?? "",
                         clubPhoto: doc["clubPhoto"] as? String ?? "",
                         leaders: doc["leaders"] as? String ?? "",
+                        category: doc["category"] as? String ?? "",
                         
                     )
                 }

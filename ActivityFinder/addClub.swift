@@ -79,6 +79,12 @@ struct AddClubView: View {
     }
     
     
+        
+            
+        
+    }
+    
+    
     
     
     func addClub() {
