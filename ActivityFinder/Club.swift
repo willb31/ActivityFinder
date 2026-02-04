@@ -18,6 +18,7 @@ struct Club: Identifiable, Codable {
     var location: String
     var clubPhoto: String
     var leaders: String
+    var category: String
     
     
     

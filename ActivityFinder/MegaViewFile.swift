@@ -31,6 +31,7 @@ struct ClubCardView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
             
+            Text(club.category)
             
             
         }
