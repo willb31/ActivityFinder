@@ -38,20 +38,7 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-struct ClubCardView: View {
-    let club: Club
-    
-    var body: some View {
-        VStack {
-            Text(club.name)
-            
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.3))
-        .cornerRadius(10)
-    }
-}
+
 struct TabView: View {
     @State var authManager = AuthenticationManager()
     var body: some View {
