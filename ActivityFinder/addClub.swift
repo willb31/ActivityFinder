@@ -12,7 +12,6 @@ struct AddClubView: View {
     @State var clubName = ""
     @State var description = ""
     @State var category = ""
-    @State var meetingSchedule = ""
     @State var location = ""
     @State var contactEmail = ""
     @State var advisorName = ""
@@ -23,34 +22,32 @@ struct AddClubView: View {
     var body: some View {
         Spacer()
         Group{
-          Text("Basic Information")
-                TextField("Club Name", text: $clubName)
+            Text("Basic Information")
+            TextField("Club Name", text: $clubName)
             
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-                TextField("Category", text: $category)
+            TextField("Category", text: $category)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
-           Text("Description")
-                TextField("Description", text: $description)
+            Text("Description")
+            TextField("Description", text: $description)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
             
-            Text("Meeting Details")
-                TextField("Meeting Schedule", text: $meetingSchedule)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-                TextField("Location", text: $location)
+            Text("Location")
+            
+            TextField("Location", text: $location)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
             Text("Contact Information")
-                TextField("Advisor Name", text: $advisorName)
+            TextField("Advisor Name", text: $advisorName)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-                TextField("Contact Email", text: $contactEmail)
+            TextField("Contact Email", text: $contactEmail)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
@@ -59,37 +56,36 @@ struct AddClubView: View {
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             Text("Time Commitment")
-            TextField("Number of Members", text: $timeCommitment)
+            TextField("Time commitment", text: $timeCommitment)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-                Button(action: addClub) {
-                 
-                        Text("Add Club")
-                        .font(.largeTitle)
-                        
-                }
+            Button(action: addClub) {
+                
+                Text("Add Club")
+                   
+                
+            }
             Spacer()
-        Text("Clear before adding new club")
-                .font(.largeTitle)
+            Text("Clear before adding new club")
+               
                 .foregroundStyle(.red)
             Button(action: clearForm){
                 Text("clear")
-                    .font(.largeTitle)
+                    
             }
             
         }
         
     }
-        
-            
-        
+    
+    
+    
     
     func addClub() {
         let clubData: [String: Any] = [
             "_clubName": clubName,
             "description": description,
             "category": category,
-            "meetingSchedule": meetingSchedule,
             "location": location,
             "contactEmail": contactEmail,
             "advisorName": advisorName,
@@ -110,7 +106,6 @@ struct AddClubView: View {
         clubName = ""
         description = ""
         category = ""
-        meetingSchedule = ""
         location = ""
         contactEmail = ""
         advisorName = ""
