@@ -20,6 +20,7 @@ struct ClubCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack{
                 
+               
                 
                 Text(club.name)
                     .font(.headline)
