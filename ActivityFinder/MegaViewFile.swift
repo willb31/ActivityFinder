@@ -29,11 +29,13 @@ struct ClubCardView: View {
                 Spacer()
                 
                 Text(club.category)
-                    .padding()
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .foregroundStyle(.orange.opacity(0.65))
-                        )
+                    .font(.caption)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.orange.opacity(0.4))
+                    )
                   
                 
             }
@@ -50,7 +52,7 @@ struct ClubCardView: View {
                .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
                .background(
                    RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(red: 0.68, green: 0.85, blue: 0.90))
+                    .fill(Color(.systemGray6))
                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
                )
                .overlay(

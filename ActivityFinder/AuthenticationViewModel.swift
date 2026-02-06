@@ -119,10 +119,12 @@ import Firebase
             isAdmin = false
     }
     func fetchClubs() {
+        
             database.collection("clubs").addSnapshotListener { snapshot, error in
                 guard let documents = snapshot?.documents else { return }
 
                 self.clubs = documents.map { doc in
+                    
                     Club(
                         id: doc.documentID,
                         name: doc["_clubName"] as? String ?? "",
@@ -133,7 +135,10 @@ import Firebase
                         category: doc["category"] as? String ?? "",
                         
                     )
+                    
                 }
+                
             }
+        
         }
 }
