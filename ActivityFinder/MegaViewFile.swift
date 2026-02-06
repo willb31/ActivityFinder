@@ -29,6 +29,11 @@ struct ClubCardView: View {
                 Spacer()
                 
                 Text(club.category)
+                    .padding()
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .foregroundStyle(.orange.opacity(0.65))
+                        )
                   
                 
             }

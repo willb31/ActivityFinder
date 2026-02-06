@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseFirestore
-
 struct AddClubView: View {
     @State var clubName = ""
     @State var description = ""
@@ -22,32 +21,31 @@ struct AddClubView: View {
     var body: some View {
         Spacer()
         Group{
-            Text("Basic Information")
-            TextField("Club Name", text: $clubName)
+          Text("Basic Information")
+                TextField("Club Name", text: $clubName)
             
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-            TextField("Category", text: $category)
+                TextField("Category", text: $category)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
-            Text("Description")
-            TextField("Description", text: $description)
+           Text("Description")
+                TextField("Description", text: $description)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
             
-            Text("Location")
-            
-            TextField("Location", text: $location)
+            Text("Loaction")
+                TextField("Location", text: $location)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
             Text("Contact Information")
-            TextField("Advisor Name", text: $advisorName)
+                TextField("Advisor Name", text: $advisorName)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-            TextField("Contact Email", text: $contactEmail)
+                TextField("Contact Email", text: $contactEmail)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             
@@ -56,36 +54,30 @@ struct AddClubView: View {
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
             Text("Time Commitment")
-            TextField("Time commitment", text: $timeCommitment)
+            TextField("Number of Members", text: $timeCommitment)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
-            Button(action: addClub) {
-                
-                Text("Add Club")
-                   
-                
-            }
+                Button(action: addClub) {
+                 
+                        Text("Add Club")
+                        .font(.largeTitle)
+                        
+                }
             Spacer()
-            Text("Clear before adding new club")
-               
+        Text("Clear before adding new club")
+                .font(.largeTitle)
                 .foregroundStyle(.red)
             Button(action: clearForm){
                 Text("clear")
-                    
+                    .font(.largeTitle)
             }
             
         }
         
     }
-    
-    
         
             
         
-    }
-    
-    
-    
     
     func addClub() {
         let clubData: [String: Any] = [
@@ -119,7 +111,6 @@ struct AddClubView: View {
         timeCommitment = ""
     }
 }
-
 #Preview {
     AddClubView()
 }
