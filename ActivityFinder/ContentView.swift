@@ -10,37 +10,46 @@ import Firebase
 
 struct ContentView: View {
     @State var authManager = AuthenticationManager()
+    @State var selectedClub: Club?
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     var body: some View {
-        TabView()
-        NavigationStack{
-            VStack {
-                Text("Hello, \(authManager.user?.displayName ?? "User")!")
-                    .font(.title)
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(authManager.clubs) { club in
-                            ClubCardView(club: club)
+        ZStack {
+            NavigationStack{
+                VStack {
+                    Text("Hello, \(authManager.user?.displayName ?? "User")!")
+                        .font(.title)
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(authManager.clubs) { club in
+                                ClubCardView(club: club, selectedClub: $selectedClub)
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
+                }
+                HStack{
+                    Spacer()
+                    Button("Clear Sign-In (Temporary)") {
+                        authManager.signOut()
+                        
+                    }
+                    Spacer()
+                    NavigationLink("Add club (temporary)"){
+                        AddClubView()
+                    }
+                    Spacer()
                 }
             }
-            HStack{
-                Spacer()
-                Button("Clear Sign-In (Temporary)") {
-                    authManager.signOut()
-                    
-                }
-                Spacer()
-                NavigationLink("Add club (temporary)"){
-                    AddClubView()
-                }
-                Spacer()
-            }
+        }
+        if let club = selectedClub {
+            ClubDetailView(club: club, isPresented: Binding(
+                get: { selectedClub != nil },
+                set: { if !$0 { selectedClub = nil }}
+            ))
+            
         }
     }
 }

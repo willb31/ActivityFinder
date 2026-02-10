@@ -15,8 +15,10 @@ import Firebase
 
 struct ClubCardView: View {
     let club: Club
+    @Binding var selectedClub: Club?
 
     var body: some View {
+      
         VStack(alignment: .leading, spacing: 8) {
             HStack{
                 
@@ -60,6 +62,10 @@ struct ClubCardView: View {
                    RoundedRectangle(cornerRadius: 16)
                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                )
+               .contentShape(Rectangle())
+               .onTapGesture {
+                   selectedClub = club
+               }
     }
 }
 struct TabView: View {
@@ -86,5 +92,32 @@ struct TabView: View {
             .background(Color.orange)
             
         
+    }
+}
+
+struct ClubDetailView: View {
+    let club: Club
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .onTapGesture {
+                    isPresented = false
+                }
+            
+            VStack {
+                HStack{
+                    Text(club.name)
+                    
+                    Spacer()
+                    
+                    Button(action : {
+                        isPresented = false
+                    }) {
+                    }
+                }
+            }
+        }
     }
 }
