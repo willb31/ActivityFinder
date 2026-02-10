@@ -7,14 +7,15 @@ import GoogleSignIn
 import FirebaseCore
 import Firebase
 
-
 struct ContentView: View {
     @State var showSidebar = false
     @State var authManager = AuthenticationManager()
+
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
     ]
+
     var body: some View {
         
         ZStack(alignment: .trailing) {
@@ -73,7 +74,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
-
-
-
