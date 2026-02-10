@@ -22,13 +22,13 @@ struct ClubCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack{
                 
-               
+                
                 
                 Text(club.name)
                     .font(.headline)
                     .bold()
                     .foregroundColor(.primary)
-              
+                
                 Spacer()
                 
                 Text(club.category)
@@ -39,7 +39,7 @@ struct ClubCardView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.orange.opacity(0.4))
                     )
-                  
+                
                 
             }
             Text(club.description)
@@ -48,7 +48,7 @@ struct ClubCardView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
             
-           
+            
             
         }
         .padding(20)
@@ -70,28 +70,203 @@ struct ClubCardView: View {
 }
 struct TabView: View {
     @State var authManager = AuthenticationManager()
+    @Binding var showSidebar: Bool
     var body: some View {
         
+        
+        HStack {
+            Image("HerseyLogo")
+                .resizable()
+                .frame(width: 130, height: 80, alignment: .topLeading)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
             
-            HStack {
-                Image("HerseyLogo")
-                    .resizable()
-                    .frame(width: 130, height: 80, alignment: .topLeading)
-                    .padding()
-    
-                
             Spacer()
-                Button{}label: {
-                    Image(systemName: "line.3.horizontal")
-                        .padding()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
+            Button{
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                    showSidebar.toggle()
+                                }
+            }label: {
+                Image(systemName: "line.3.horizontal")
+                    .padding()
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+            }
+        }
+        .background(Color.orange)
+        
+       
+        
+            }
+}
+struct SidebarView: View {
+    @Binding var showSidebar: Bool
+    @State var authManager: AuthenticationManager
+    
+    var body: some View {
+        VStack() {
+            HStack {
+                Text("Options")
+                    .font(.headline)
+                    .bold()
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                Button {
+                    withAnimation(.spring()) {
+                        showSidebar = false
+                    }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.headline)
+                        .foregroundColor(.gray)
                 }
             }
+            .padding()
             
-            .background(Color.orange)
             
-        
+            Divider()
+            
+            ScrollView {
+                VStack() {
+
+                    VStack() {
+                        Image(systemName: "person.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.orange)
+                        
+                        Text(authManager.user?.displayName ?? "User")
+                            .font(.headline)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .background(Color(.systemGray6).opacity(0.5))
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                    Button {} label: {
+                        HStack(spacing: 15) {
+                            Image(systemName: "person.2.fill")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .frame(width: 25)
+                            
+                            Text("My Clubs")
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                    }
+                    Button {} label: {
+                        HStack(spacing: 15) {
+                            Image(systemName: "person.circle.fill")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .frame(width: 25)
+                            
+                            Text("Add Club")
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                    }
+                    Button {} label: {
+                        HStack(spacing: 15) {
+                            Image(systemName: "bookmark.fill")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .frame(width: 25)
+                            
+                            Text("Saved")
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                    }
+                    Button {} label: {
+                        HStack(spacing: 15) {
+                            Image(systemName: "gear")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .frame(width: 25)
+                            
+                            Text("Settings")
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                    }
+                    
+                    Divider()
+                    
+                    Button {} label: {
+                        HStack(spacing: 15) {
+                            Image(systemName: "questionmark.circle")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .frame(width: 25)
+                            
+                            Text("Help & Support")
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                    }
+                    
+                   
+                    
+                    Spacer()
+                    
+                    Button {
+                        authManager.signOut()
+                        showSidebar = false
+                    } label: {
+                        HStack {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .foregroundColor(.red)
+                            Text("Sign Out")
+                                .foregroundColor(.red)
+                            Spacer()
+                        }
+                        .padding()
+                    }
+                }
+            }
+        }
+        .frame(width: 280)
+        .background(Color(.systemBackground))
+        .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
     }
 }
 

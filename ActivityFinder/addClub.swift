@@ -19,64 +19,80 @@ struct AddClubView: View {
     let database = Firestore.firestore()
     
     var body: some View {
-        Spacer()
-        Group{
-          Text("Basic Information")
+        ScrollView{
+            Group{
+                Text("Basic Information")
                 TextField("Club Name", text: $clubName)
-            
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
+                
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
                 TextField("Category", text: $category)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-            
-           Text("Description")
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                
+                Text("Description")
                 TextField("Description", text: $description)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-            
-            
-            Text("Loaction")
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                
+                
+                Text("Loaction")
                 TextField("Location", text: $location)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-            
-            Text("Contact Information")
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                
+                Text("Contact Information")
                 TextField("Advisor Name", text: $advisorName)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
                 TextField("Contact Email", text: $contactEmail)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-            
-            Text("Number of Memebers")
-            TextField("Number of Members", text: $numOfMembers)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-            Text("Time Commitment")
-            TextField("Number of Members", text: $timeCommitment)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                
+                Text("Number of Memebers")
+                TextField("Number of Members", text: $numOfMembers)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                Text("Time Commitment")
+                TextField("Number of Members", text: $timeCommitment)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
                 Button(action: addClub) {
-                 
-                        Text("Add Club")
-                        .font(.largeTitle)
-                        
+                    
+                    Text("Add Club")
+                        .padding(.vertical, 2)
+                        .foregroundStyle(.primary)
+                        .font(.headline)
+                        .bold()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 200)
+                                .foregroundStyle(.green.opacity(0.5))
+                        )
+                    
                 }
-            Spacer()
-        Text("Clear before adding new club")
-                .font(.largeTitle)
-                .foregroundStyle(.red)
-            Button(action: clearForm){
-                Text("clear")
-                    .font(.largeTitle)
+                Text("Clear before adding new club")
+                    .padding(.vertical, 2)
+                    .font(.headline)
+                    .foregroundStyle(.red)
+                Button(action: clearForm){
+                    Text("clear")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                        .bold()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 200)
+                                .foregroundStyle(.green.opacity(0.5))
+                        )
+                }
+                Spacer()
+                
             }
             
         }
         
     }
-        
-            
         
     
     func addClub() {
