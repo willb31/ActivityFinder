@@ -15,7 +15,7 @@ import Firebase
 
 struct ClubCardView: View {
     let club: Club
-    @Binding var selectedClub: Club?
+//    @Binding var selectedClub: Club?
 
     var body: some View {
       
@@ -64,7 +64,7 @@ struct ClubCardView: View {
                )
                .contentShape(Rectangle())
                .onTapGesture {
-                   selectedClub = club
+//                   selectedClub = club
                }
     }
 }
@@ -275,7 +275,7 @@ struct SidebarView: View {
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
         }
     }
-}
+
 
 struct ClubDetailView: View {
     let club: Club
