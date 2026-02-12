@@ -15,7 +15,7 @@ import Firebase
 
 struct ClubCardView: View {
     let club: Club
-    @Binding var selectedClub: Club?
+//    @Binding var selectedClub: Club?
 
     var body: some View {
       
@@ -62,10 +62,7 @@ struct ClubCardView: View {
                    RoundedRectangle(cornerRadius: 16)
                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                )
-               .contentShape(Rectangle())
-               .onTapGesture {
-                   selectedClub = club
-               }
+               
     }
 }
 struct TabView: View {
@@ -275,31 +272,29 @@ struct SidebarView: View {
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
         }
     }
-}
+
 
 struct ClubDetailView: View {
     let club: Club
-    @Binding var isPresented: Bool
     
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.4)
-                .onTapGesture {
-                    isPresented = false
-                }
+        VStack(alignment: .leading, spacing: 20) {
+            Text(club.name)
+                .font(.title)
+                .bold()
             
-            VStack {
-                HStack{
-                    Text(club.name)
-                    
-                    Spacer()
-                    
-                    Button(action : {
-                        isPresented = false
-                    }) {
-                    }
-                }
-            }
+            Text(club.description)
+                .font(.body)
+            
+            Text(club.location)
+                .font(.subheadline)
+            
+            Text(club.leaders)
+                .font(.subheadline)
+            
+            Text(club.category)
+                .font(.subheadline)
         }
+        .padding()
     }
 }
