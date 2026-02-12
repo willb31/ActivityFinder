@@ -279,27 +279,25 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
-    @Binding var isPresented: Bool
     
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.4)
-                .onTapGesture {
-                    isPresented = false
-                }
+        VStack(alignment: .leading, spacing: 20) {
+            Text(club.name)
+                .font(.title)
+                .bold()
             
-            VStack {
-                HStack{
-                    Text(club.name)
-                    
-                    Spacer()
-                    
-                    Button(action : {
-                        isPresented = false
-                    }) {
-                    }
-                }
-            }
+            Text(club.description)
+                .font(.body)
+            
+            Text(club.location)
+                .font(.subheadline)
+            
+            Text(club.leaders)
+                .font(.subheadline)
+            
+            Text(club.category)
+                .font(.subheadline)
         }
+        .padding()
     }
 }
