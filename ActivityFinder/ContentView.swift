@@ -11,6 +11,7 @@ struct ContentView: View {
     @State var showSidebar = false
     @State var authManager = AuthenticationManager()
     @State var navigationPath = NavigationPath()
+    @State var selectedClub: Club?
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)

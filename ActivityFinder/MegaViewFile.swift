@@ -15,8 +15,10 @@ import Firebase
 
 struct ClubCardView: View {
     let club: Club
-    
+    @Binding var selectedClub: Club?
+
     var body: some View {
+      
         VStack(alignment: .leading, spacing: 8) {
             HStack{
                 
@@ -50,16 +52,20 @@ struct ClubCardView: View {
             
         }
         .padding(20)
-        .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemGray6))
-                .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-        )
+               .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
+               .background(
+                   RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(.systemGray6))
+                       .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+               )
+               .overlay(
+                   RoundedRectangle(cornerRadius: 16)
+                       .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+               )
+               .contentShape(Rectangle())
+               .onTapGesture {
+                   selectedClub = club
+               }
     }
 }
 struct TabView: View {
@@ -269,7 +275,31 @@ struct SidebarView: View {
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
         }
     }
+}
 
-#Preview {
-    ContentView()
+struct ClubDetailView: View {
+    let club: Club
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .onTapGesture {
+                    isPresented = false
+                }
+            
+            VStack {
+                HStack{
+                    Text(club.name)
+                    
+                    Spacer()
+                    
+                    Button(action : {
+                        isPresented = false
+                    }) {
+                    }
+                }
+            }
+        }
+    }
 }
