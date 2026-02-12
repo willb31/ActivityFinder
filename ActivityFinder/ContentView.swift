@@ -18,11 +18,12 @@ struct ContentView: View {
     ]
 
     var body: some View {
-        
+        TabView(showSidebar: $showSidebar)
         ZStack(alignment: .trailing) {
+            
                    NavigationStack(path: $navigationPath) {
                        VStack(spacing: 0) {
-                           TabView(showSidebar: $showSidebar)
+                           
                            
                            VStack {
                                

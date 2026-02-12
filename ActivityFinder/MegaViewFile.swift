@@ -15,41 +15,54 @@ import Firebase
 
 struct ClubCardView: View {
     let club: Club
-    @Binding var selectedClub: Club?
+//    @Binding var selectedClub: Club?
 
     var body: some View {
       
-        VStack(alignment: .leading, spacing: 8) {
-            HStack{
+        HStack{
+            if UIImage(named: club.name) != nil {
+                Image(club.name)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150,height: 150)
+            } else {
+                Image("DefaultClub")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150,height: 150)
+            }
+            VStack(alignment: .leading, spacing: 8) {
+                HStack{
+                    
+                    
+                    
+                    Text(club.name)
+                        .font(.headline)
+                        .bold()
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                    
+                    Text(club.category)
+                        .font(.caption)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.orange.opacity(0.4))
+                        )
+                    
+                    
+                }
+                Text(club.description)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .lineLimit(6)
+                    .multilineTextAlignment(.leading)
                 
-                
-                
-                Text(club.name)
-                    .font(.headline)
-                    .bold()
-                    .foregroundColor(.primary)
                 
                 Spacer()
-                
-                Text(club.category)
-                    .font(.caption)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.orange.opacity(0.4))
-                    )
-                
-                
             }
-            Text(club.description)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .lineLimit(3)
-                .multilineTextAlignment(.leading)
-            
-            
-            
         }
         .padding(20)
                .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
@@ -64,7 +77,7 @@ struct ClubCardView: View {
                )
                .contentShape(Rectangle())
                .onTapGesture {
-                   selectedClub = club
+//                   selectedClub = club
                }
     }
 }
@@ -75,6 +88,8 @@ struct TabView: View {
         
         
         HStack {
+            
+            
             Image("HerseyLogo")
                 .resizable()
                 .frame(width: 130, height: 80, alignment: .topLeading)
@@ -275,7 +290,7 @@ struct SidebarView: View {
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
         }
     }
-}
+
 
 struct ClubDetailView: View {
     let club: Club
