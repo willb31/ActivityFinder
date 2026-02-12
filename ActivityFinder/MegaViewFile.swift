@@ -278,23 +278,63 @@ struct ClubDetailView: View {
     let club: Club
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 24) {
+            
+           
             Text(club.name)
-                .font(.title)
-                .bold()
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.bottom, 4)
             
-            Text(club.description)
-                .font(.body)
+          
+            VStack(alignment: .leading, spacing: 6) {
+                Text("About the Club")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                
+                Text(club.description)
+                    .font(.body)
+                  
+            }
             
-            Text(club.location)
-                .font(.subheadline)
+            VStack(alignment: .leading, spacing: 12) {
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Location")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.location)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Leaders")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.leaders)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Category")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.category)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+            }
+            .padding()
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             
-            Text(club.leaders)
-                .font(.subheadline)
-            
-            Text(club.category)
-                .font(.subheadline)
+            Spacer()
         }
         .padding()
+        .navigationTitle("Club Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
