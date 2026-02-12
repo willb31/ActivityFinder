@@ -62,7 +62,10 @@ struct ClubCardView: View {
                    RoundedRectangle(cornerRadius: 16)
                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                )
-               
+               .contentShape(Rectangle())
+               .onTapGesture {
+//                   selectedClub = club
+               }
     }
 }
 struct TabView: View {
