@@ -10,7 +10,7 @@ import Firebase
 struct ContentView: View {
     @State var showSidebar = false
     @State var authManager = AuthenticationManager()
-
+    @State var navigationPath = NavigationPath()
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -19,14 +19,11 @@ struct ContentView: View {
     var body: some View {
         
         ZStack(alignment: .trailing) {
-                   NavigationStack {
+                   NavigationStack(path: $navigationPath) {
                        VStack(spacing: 0) {
                            TabView(showSidebar: $showSidebar)
                            
                            VStack {
-                               Text("Hello, \(authManager.user?.displayName ?? "User")!")
-                                   .font(.title)
-                                   .padding(.top)
                                
                                ScrollView {
                                    LazyVGrid(columns: columns, spacing: 16) {
@@ -38,18 +35,12 @@ struct ContentView: View {
                                }
                            }
                            
-                           HStack {
-                               Spacer()
-                               Button("Clear Sign-In (Temporary)") {
-                                   authManager.signOut()
-                               }
-                               Spacer()
-                               NavigationLink("Add club (temporary)") {
-                                   AddClubView()
-                               }
-                               Spacer()
-                           }
                        }
+                       .navigationDestination(for: String.self) { destination in
+                                           if destination == "AddClub" {
+                                               AddClubView()
+                                           }
+                                       }
                    }
                    .blur(radius: showSidebar ? 2 : 0)
                    .disabled(showSidebar)
@@ -64,7 +55,7 @@ struct ContentView: View {
                                }
                            }
                        
-                       SidebarView(showSidebar: $showSidebar, authManager: authManager)
+                       SidebarView(showSidebar: $showSidebar, authManager: authManager, navigationPath: $navigationPath)
                            .transition(.move(edge: .trailing))
                    }
                }
