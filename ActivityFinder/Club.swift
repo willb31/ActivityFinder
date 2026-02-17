@@ -21,10 +21,10 @@ struct Club: Identifiable, Hashable {
     var description: String
     var location: String
     var clubPhoto: String
-    var leaders: String
+    var advisorName: String
     var category: String
     var timeCommitment: String
-    
+    var contactEmail: String
     
     var clubID: String {
            return id ?? ""

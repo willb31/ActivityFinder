@@ -75,6 +75,7 @@ struct ClubCardView: View {
                    RoundedRectangle(cornerRadius: 16)
                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                )
+             
     }
 }
 struct TabView: View {
@@ -178,6 +179,30 @@ struct SidebarView: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 12)
                         }
+                        
+                        Button {
+                            showSidebar = false
+                            navigationPath.append("Calendar")
+                        } label: {
+                            HStack(spacing: 15) {
+                                Image(systemName: "calendar")
+                                    .font(.title)
+                                    .foregroundColor(.orange)
+                                    .frame(width: 25)
+                                
+                                Text("Calendar")
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 12)
+                        }
+                        
                         Button {
                             showSidebar = false
                             navigationPath.append("AddClub")
@@ -325,41 +350,43 @@ struct ClubDetailView: View {
             
             VStack(alignment: .leading, spacing: 12) {
                 
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Location")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(club.location)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Leaders")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(club.leaders)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Category")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(club.category)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Time Commitment")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(club.timeCommitment)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Location")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.location)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Sponsor")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.advisorName)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    Text(club.contactEmail)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Category")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.category)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Time Commitment")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.timeCommitment)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
                 
             }
             .padding()
@@ -376,3 +403,15 @@ struct ClubDetailView: View {
     }
 }
 
+struct CalendarView: View {
+    var body: some View {
+        VStack {
+            Text("Calendar")
+                .font(.largeTitle)
+                .bold()
+                .padding()
+            
+            Spacer()
+        }
+    }
+}

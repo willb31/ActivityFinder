@@ -45,6 +45,8 @@ struct ContentView: View {
                        .navigationDestination(for: String.self) { destination in
                                            if destination == "AddClub" {
                                                AddClubView()
+                                           } else if destination == "Calendar" {
+                                               CalendarView()
                                            }
                                        }
                    }
