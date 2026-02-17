@@ -23,8 +23,8 @@ struct ClubCardView: View {
             if UIImage(named: club.name) != nil {
                 Image(club.name)
                     .resizable()
-                    .scaledToFill()
-                    .frame(width: 150,height: 150)
+                    .scaledToFit()
+                    .frame(width: 150,height: 150, alignment: .center)
             } else {
                 Image("DefaultClub")
                     .resizable()
@@ -294,27 +294,65 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
-    @Binding var isPresented: Bool
     
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.4)
-                .onTapGesture {
-                    isPresented = false
-                }
+        VStack(alignment: .leading, spacing: 24) {
             
-            VStack {
-                HStack{
-                    Text(club.name)
-                    
-                    Spacer()
-                    
-                    Button(action : {
-                        isPresented = false
-                    }) {
-                    }
-                }
+           
+            Text(club.name)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.bottom, 4)
+            
+          
+            VStack(alignment: .leading, spacing: 6) {
+                Text("About the Club")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                
+                Text(club.description)
+                    .font(.body)
+                  
             }
+            
+            VStack(alignment: .leading, spacing: 12) {
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Location")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.location)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Leaders")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.leaders)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Category")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.category)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+            }
+            .padding()
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            
+            Spacer()
         }
+        .padding()
+        .navigationTitle("Club Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

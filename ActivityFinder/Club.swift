@@ -9,8 +9,12 @@ import SwiftUI
 import Foundation
 import FirebaseFirestore
 
-struct Club: Identifiable, Codable {
+
+
+struct Club: Identifiable, Hashable {
    
+    
+    
     var id: String
    
     var name: String

@@ -11,7 +11,6 @@ struct ContentView: View {
     @State var showSidebar = false
     @State var authManager = AuthenticationManager()
     @State var navigationPath = NavigationPath()
-    @State var selectedClub: Club?
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -26,18 +25,23 @@ struct ContentView: View {
                            
                            
                            VStack {
-                               
                                ScrollView {
                                    LazyVGrid(columns: columns, spacing: 16) {
                                        ForEach(authManager.clubs) { club in
                                            ClubCardView(club: club)
-                                       }
-                                   }
+                                               .onTapGesture {
+                                                   navigationPath.append(club)
+                                               }
+                                       }                                   }
                                    .padding()
                                }
                            }
                            
                        }
+                       .navigationDestination(for: Club.self) { club in
+                           ClubDetailView(club: club)
+                       }
+                      
                        .navigationDestination(for: String.self) { destination in
                                            if destination == "AddClub" {
                                                AddClubView()
