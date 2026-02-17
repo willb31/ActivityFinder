@@ -324,10 +324,13 @@ struct ClubDetailView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Leaders")
+                    Text("Sponsor")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text(club.leaders)
+                    Text(club.advisorName)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    Text(club.contactEmail)
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
