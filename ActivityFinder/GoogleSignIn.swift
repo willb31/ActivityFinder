@@ -20,37 +20,48 @@ struct GoogleSignInView: View {
         VStack(spacing: 30) {
             Spacer()
             
-            VStack(spacing: 10) {
+            VStack() {
                 Image("ActivityFinderLogo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.blue)
+                    .frame(width: 400, height: 400)
+                   
                 
-                Text("Activity Finder")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                
                 
                 Text("Connect with your school community")
-                    .font(.subheadline)
+                    .font(.title2)
                     .foregroundColor(.gray)
             }
             
             Spacer()
+            
             Text("Use your school Google account to sign in")
                 .foregroundColor(.gray)
+        
             Button(action: {
                 authManager.signInWithGoogle()
             }) {
-                HStack {
-                    
-                    Text("Sign in with Google")
-                    
-                }
+                ZStack {
+                        
+                        Text("Sign in with Google")
+                            .foregroundColor(.white)
+                        
+        
+                        HStack {
+                            Image("GoogleLogo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                            
+                            Spacer()
+                        }
+                        .padding(.leading, 16)
+                    }
                 .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: 500)
                 .frame(height: 50)
-                .background(Color.blue)
+                .background(Color.orange)
                 .cornerRadius(10)
             }
             .padding(.horizontal, 40)
