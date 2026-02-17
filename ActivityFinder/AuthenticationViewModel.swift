@@ -133,6 +133,7 @@ import Firebase
                         clubPhoto: doc["clubPhoto"] as? String ?? "",
                         leaders: doc["leaders"] as? String ?? "",
                         category: doc["category"] as? String ?? "",
+                        timeCommitment: doc["timeCommitment"] as? String ?? ""
                         
                     )
                     

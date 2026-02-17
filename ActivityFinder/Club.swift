@@ -23,7 +23,7 @@ struct Club: Identifiable, Hashable {
     var clubPhoto: String
     var leaders: String
     var category: String
-    
+    var timeCommitment: String
     
     
     var clubID: String {

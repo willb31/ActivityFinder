@@ -324,6 +324,14 @@ struct ClubDetailView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Time Commitment")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(club.timeCommitment)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
                 
             }
             .padding()
