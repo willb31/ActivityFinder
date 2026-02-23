@@ -25,6 +25,7 @@ struct Club: Identifiable, Hashable {
     var category: String
     var timeCommitment: String
     var contactEmail: String
+    var instagram: String
     
     var clubID: String {
            return id ?? ""

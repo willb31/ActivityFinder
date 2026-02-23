@@ -134,7 +134,8 @@ import Firebase
                         advisorName: doc["advisorName"] as? String ?? "",
                         category: doc["category"] as? String ?? "",
                         timeCommitment: doc["timeCommitment"] as? String ?? "",
-                        contactEmail: doc["contactEmail"] as? String ?? ""
+                        contactEmail: doc["contactEmail"] as? String ?? "",
+                        instagram: doc["instagram"] as? String ?? "",
                         
                     )
                     
