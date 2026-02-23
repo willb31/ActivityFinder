@@ -55,9 +55,15 @@ struct AddClubView: View {
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
                 Text("Time Commitment")
-                TextField("Number of Members", text: $timeCommitment)
+                TextField("Time Commitment", text: $timeCommitment)
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
+                Text("Instagram")
+                TextField("Instagram Handle", text: $instagram)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+              
+                
                 Button(action: addClub) {
                     
                     Text("Add Club")
