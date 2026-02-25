@@ -16,6 +16,7 @@ struct AddClubView: View {
     @State var advisorName = ""
     @State var numOfMembers = ""
     @State var timeCommitment = ""
+    @State var instagram = ""
     let database = Firestore.firestore()
     
     var body: some View {
@@ -54,9 +55,15 @@ struct AddClubView: View {
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
                 Text("Time Commitment")
-                TextField("Number of Members", text: $timeCommitment)
+                TextField("Time Commitment", text: $timeCommitment)
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
+                Text("Instagram")
+                TextField("Instagram Handle", text: $instagram)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+              
+                
                 Button(action: addClub) {
                     
                     Text("Add Club")
@@ -106,7 +113,8 @@ struct AddClubView: View {
             "numberOfMembers": numOfMembers,
             "timeCommitment": timeCommitment,
             "createdAt": FieldValue.serverTimestamp(),
-            "updatedAt": FieldValue.serverTimestamp()
+            "updatedAt": FieldValue.serverTimestamp(),
+            "instagram": instagram
         ]
         
         database.collection("clubs").addDocument(data: clubData) { error in
@@ -125,6 +133,7 @@ struct AddClubView: View {
         advisorName = ""
         numOfMembers = ""
         timeCommitment = ""
+        instagram = ""
     }
 }
 #Preview {
