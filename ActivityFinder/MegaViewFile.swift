@@ -50,6 +50,7 @@ struct ClubCardView: View {
                         .background(
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.orange.opacity(0.4))
+                            
                         )
                     
                     
@@ -70,10 +71,12 @@ struct ClubCardView: View {
                    RoundedRectangle(cornerRadius: 16)
                     .fill(Color(.systemGray6))
                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                       .padding()
                )
                .overlay(
                    RoundedRectangle(cornerRadius: 16)
                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                       .padding()
                )
              
     }
