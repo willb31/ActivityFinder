@@ -16,6 +16,7 @@ import Firebase
 struct ClubCardView: View {
     let club: Club
 //    @Binding var selectedClub: Club?
+    @State private var isFavorited = false
 
     var body: some View {
       
@@ -42,6 +43,13 @@ struct ClubCardView: View {
                         .foregroundColor(.primary)
                     
                     Spacer()
+                    
+                    Button(action: {
+                             isFavorited.toggle()
+                         }) {
+                             Image(systemName: isFavorited ? "star.fill" : "star")
+                                 .foregroundColor(isFavorited ? .yellow : .gray)
+                         }
                     
                     Text(club.category)
                         .font(.caption)
