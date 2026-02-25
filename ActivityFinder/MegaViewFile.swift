@@ -48,12 +48,7 @@ struct ClubCardView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                             isFavorited.toggle()
-                         }) {
-                             Image(systemName: isFavorited ? "star.fill" : "star")
-                                 .foregroundColor(isFavorited ? .yellow : .gray)
-                         }
+                   
                     
                     Text(club.category)
                         .font(.caption)
@@ -358,16 +353,23 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
-    
+    @State var isFavorited = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             
-            
-            Text(club.name)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.bottom, 4)
-            
+            HStack{
+                Text(club.name)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 4)
+                Button(action: {
+                         isFavorited.toggle()
+                     }) {
+                         Image(systemName: isFavorited ? "star.fill" : "star")
+                             .foregroundColor(isFavorited ? .yellow : .gray)
+                     }
+            }
             
             VStack(alignment: .leading, spacing: 6) {
                 Text("About the Club")
