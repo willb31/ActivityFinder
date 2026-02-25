@@ -49,18 +49,6 @@ struct ClubCardView: View {
                     Spacer()
                     
                    
-                    
-                    Text(club.category)
-                        .font(.caption)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.orange.opacity(0.4))
-                            
-                        )
-                    
-                    
                     HStack {
                         Spacer()
                         Text(club.category)
@@ -363,6 +351,7 @@ struct ClubDetailView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 4)
+               
                 Button(action: {
                          isFavorited.toggle()
                      }) {
