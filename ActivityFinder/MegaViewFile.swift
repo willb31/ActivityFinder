@@ -48,6 +48,23 @@ struct ClubCardView: View {
                     
                     Spacer()
                     
+                    Button(action: {
+                             isFavorited.toggle()
+                         }) {
+                             Image(systemName: isFavorited ? "star.fill" : "star")
+                                 .foregroundColor(isFavorited ? .yellow : .gray)
+                         }
+                    
+                    Text(club.category)
+                        .font(.caption)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.orange.opacity(0.4))
+                            
+                        )
+                    
                     
                     HStack {
                         Spacer()
