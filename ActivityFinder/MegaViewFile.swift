@@ -18,52 +18,78 @@ struct ClubCardView: View {
     //    @Binding var selectedClub: Club?
     
     var body: some View {
-        
-        HStack{
-            if UIImage(named: club.name) != nil {
-                Image(club.name)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150,height: 150, alignment: .center)
-            } else {
-                Image("DefaultClub")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150,height: 150)
-            }
-            VStack(alignment: .leading, spacing: 8) {
-                HStack{
+        ZStack(alignment: .topTrailing) {
+            HStack{
+                if UIImage(named: club.name) != nil {
+                    Image(club.name)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 150,height: 150, alignment: .center)
+                } else {
+                    Image("DefaultClub")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 150,height: 150)
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack{
+                        Text(club.name)
+                            .font(.headline)
+                            .bold()
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                    }
                     
-                    
-                    
-                    Text(club.name)
-                        .font(.headline)
-                        .bold()
-                        .foregroundColor(.primary)
+                    Text(club.description)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .lineLimit(6)
+                        .multilineTextAlignment(.leading)
                     
                     Spacer()
                     
-                    Text(club.category)
-                        .font(.caption)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.orange.opacity(0.4))
-                            
-                        )
-                    
-                    
+                   
+                    HStack {
+                        Spacer()
+                        Text(club.category)
+                            .font(.caption)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.orange.opacity(0.4))
+                            )
+                    }
+                    .padding(.bottom, 8)
+                    .padding(.trailing, 8)
                 }
-                Text(club.description)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                    .lineLimit(6)
-                    .multilineTextAlignment(.leading)
-                
-                
-                Spacer()
             }
+            .padding(20)
+            .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(.systemGray6))
+                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                    .padding()
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                    .padding()
+            )
+            
+            
+            Image(systemName: "chevron.right.circle.fill")
+                .font(.title2)
+                .foregroundColor(.orange)
+                .background(
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: 24, height: 24)
+                )
+                .padding(.top, 18)
+                .padding(.trailing, 20)
         }
         .padding(20)
         .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
@@ -372,15 +398,24 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
-    
+    @State var isFavorited = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             
-            
-            Text(club.name)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.bottom, 4)
+            HStack{
+                Text(club.name)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 4)
+               
+                Button(action: {
+                         isFavorited.toggle()
+                     }) {
+                         Image(systemName: isFavorited ? "star.fill" : "star")
+                             .foregroundColor(isFavorited ? .yellow : .gray)
+                     }
+            }
             
             
             VStack(alignment: .leading, spacing: 6) {
