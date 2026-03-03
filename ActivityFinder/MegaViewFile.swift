@@ -91,19 +91,6 @@ struct ClubCardView: View {
                 .padding(.top, 18)
                 .padding(.trailing, 20)
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemGray6))
-                .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
-                .padding()
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                .padding()
-        )
         
     }
 }
@@ -128,6 +115,7 @@ struct TabView: View {
                 Button {
                     withAnimation(.spring(response: 0.3)) {
                         isSearching.toggle()
+                        showSidebar = false
                         if !isSearching {
                             searchText = ""
                         }
@@ -399,6 +387,7 @@ struct SidebarView: View {
 struct ClubDetailView: View {
     let club: Club
     @State var isFavorited = false
+    @State var copied = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -446,9 +435,34 @@ struct ClubDetailView: View {
                     Text(club.advisorName)
                         .font(.subheadline)
                         .fontWeight(.medium)
-                    Text(club.contactEmail)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                    HStack{
+                        Text(club.contactEmail)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        
+                        Button {
+                            UIPasteboard.general.string = "\(club.contactEmail)"
+                            
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                copied = true
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    copied = false
+                                }
+                            }
+                            
+                        } label: {
+                            Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                                .scaledToFit()
+                                .foregroundColor(.white)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 15)
+                                .background(Color.blue)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -482,7 +496,9 @@ struct ClubDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
+#Preview{
+    ContentView()
+}
 struct CalendarView: View {
     var body: some View {
         VStack {
@@ -495,3 +511,4 @@ struct CalendarView: View {
         }
     }
 }
+

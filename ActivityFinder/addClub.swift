@@ -64,7 +64,10 @@ struct AddClubView: View {
                     .textFieldStyle(.roundedBorder)
               
                 
-                Button(action: addClub) {
+                Button(action: {
+                    addClub()
+                    clearForm()
+                })  {
                     
                     Text("Add Club")
                         .padding(.vertical, 2)
@@ -78,21 +81,7 @@ struct AddClubView: View {
                         )
                     
                 }
-                Text("Clear before adding new club")
-                    .padding(.vertical, 2)
-                    .font(.headline)
-                    .foregroundStyle(.red)
-                Button(action: clearForm){
-                    Text("clear")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                        .bold()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .frame(width: 200)
-                                .foregroundStyle(.green.opacity(0.5))
-                        )
-                }
+                
                 Spacer()
                 
             }
