@@ -500,15 +500,21 @@ struct ClubDetailView: View {
     ContentView()
 }
 struct CalendarView: View {
+    @State var selectedDate = Date()
+    
     var body: some View {
-        VStack {
-            Text("Calendar")
-                .font(.largeTitle)
-                .bold()
-                .padding()
-            
-            Spacer()
+            VStack {
+                Text("Calendar")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding()
+                
+                DatePicker("", selection: $selectedDate, displayedComponents: [.date])
+                    .datePickerStyle(.graphical)
+                    .padding()
+                
+                Spacer()
+            }
         }
-    }
 }
 
