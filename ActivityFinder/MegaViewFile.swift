@@ -221,19 +221,19 @@ struct SidebarView: View {
                         .padding(.vertical, 8)
                     Button {} label: {
                         HStack(spacing: 15) {
-                            Image(systemName: "person.2.fill")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
+//                            Image(systemName: "person.2.fill")
+//                                .font(.title)
+//                                .foregroundColor(.orange)
+//                                .frame(width: 25)
+//                            
+//                            Text("My Clubs")
+//                                .foregroundColor(.primary)
                             
-                            Text("My Clubs")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
+//                            Spacer()
+//                            
+//                            Image(systemName: "chevron.right")
+//                                .font(.caption)
+//                                .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 12)
