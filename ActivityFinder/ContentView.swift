@@ -13,30 +13,59 @@ struct ContentView: View {
     @State var navigationPath = NavigationPath()
     @State var searchText = ""
     @State var isSearching = false
+    @State var showTags = false
+    @State var selectedTags: Set<String> = []
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
     
     var filteredClubs: [Club] {
-            if searchText.isEmpty {
-                return authManager.clubs
-            } else {
-                return authManager.clubs.filter { club in
+        var clubs = authManager.clubs
+            
+            if !searchText.isEmpty {
+                clubs = clubs.filter { club in
                     club.name.localizedCaseInsensitiveContains(searchText) ||
                     club.category.localizedCaseInsensitiveContains(searchText) ||
                     club.description.localizedCaseInsensitiveContains(searchText)
                 }
             }
-        }
+            
+            if !selectedTags.isEmpty {
+                clubs = clubs.filter { club in
+                    for tag in selectedTags {
+                        if tag == "Competitive" || tag == "Non-competitive" {
+                            if club.category.localizedCaseInsensitiveContains(tag) {
+                                return true
+                            }
+                        } else {
+                            if club.name.localizedCaseInsensitiveContains(tag) ||
+                                club.description.localizedCaseInsensitiveContains(tag) {
+                                return true
+                            }
+                        }
+                    }
+                    return false
+                }
+            }
+            
+            return clubs
+    }
     
     var body: some View {
         VStack(spacing: 0){
             TabView(
                 showSidebar: $showSidebar,
                 searchText: $searchText,
-                isSearching: $isSearching
+                showTags: $showTags,
+                isSearching: $isSearching,
+                
             )
+            
+            if showTags {
+                Tagview(selectedTags: $selectedTags)
+            }
+            
             ZStack(alignment: .trailing) {
                 
                 NavigationStack(path: $navigationPath) {
@@ -54,15 +83,15 @@ struct ContentView: View {
                                     }                                   }
                                 .padding()
                                 
-                                if filteredClubs.isEmpty && !searchText.isEmpty {
+                                if filteredClubs.isEmpty {
                                     VStack(spacing: 12) {
-                                        Image(systemName: "magnifyingglass")
+                                        Image(systemName: selectedTags.isEmpty ? "magnifyingglass" : "tag")
                                             .font(.system(size: 50))
                                             .foregroundColor(.gray)
                                         Text("No clubs found")
                                             .font(.headline)
                                             .foregroundColor(.gray)
-                                        Text("Try a different search term")
+                                        Text(selectedTags.isEmpty ? "Try a different search term" : "Try different filters")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                     }
@@ -81,6 +110,12 @@ struct ContentView: View {
                             AddClubView()
                         } else if destination == "Calendar" {
                             CalendarView()
+                        } else if destination == "savedClubs" {
+                            savedClubsView()
+                        } else if destination == "settings" {
+                            settingsView()
+                        } else if destination == "helpSupport" {
+                            helpSupportView()
                         }
                     }
                 }

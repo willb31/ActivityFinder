@@ -98,6 +98,7 @@ struct TabView: View {
     @State var authManager = AuthenticationManager()
     @Binding var showSidebar: Bool
     @Binding var searchText: String
+    @Binding var showTags: Bool
     @Binding var isSearching: Bool
     var body: some View {
         
@@ -119,6 +120,7 @@ struct TabView: View {
                         if !isSearching {
                             searchText = ""
                         }
+                        showTags = false
                     }
                 } label: {
                     Image(systemName: "magnifyingglass")
@@ -127,9 +129,22 @@ struct TabView: View {
                         .foregroundColor(.white)
                 }
                 Button{
+                    withAnimation(.spring(response: 0.3)) {
+                        showTags.toggle()
+                        showSidebar = false
+                        isSearching = false
+                    }
+                }label: {
+                    Image(systemName: "tag")
+                        .padding()
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                }
+                Button{
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                         showSidebar.toggle()
                         isSearching = false
+                        showTags = false
                     }
                 }label: {
                     Image(systemName: "line.3.horizontal")
@@ -166,9 +181,113 @@ struct TabView: View {
             .background(Color.orange)
             .transition(.move(edge: .top).combined(with: .opacity))
         }
+        
     }
     
 }
+
+struct Tagview: View {
+    @Binding var selectedTags: Set<String>
+    
+    let categoryTags = ["Competitive", "Non-competitive"]
+    let subjectTags = ["Math", "Science", "Reading", "History", "Business",
+                       "Technology", "Art", "Fine Arts", "Speaking", "Health",
+                       "Law", "Engineering", "Cultural"]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Competition Level")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(categoryTags, id: \.self) { tag in
+                            TagButton(
+                                tag: tag,
+                                isSelected: selectedTags.contains(tag),
+                                action: { toggleTag(tag) }
+                            )
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            
+            Divider()
+                .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Subject Areas")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(subjectTags, id: \.self) { tag in
+                            TagButton(
+                                tag: tag,
+                                isSelected: selectedTags.contains(tag),
+                                action: { toggleTag(tag) }
+                            )
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            
+            if !selectedTags.isEmpty {
+                Button {
+                    selectedTags.removeAll()
+                } label: {
+                    HStack {
+                        Image(systemName: "xmark.circle.fill")
+                        Text("Clear All Filters")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.horizontal)
+                }
+            }
+        }
+        .padding(.vertical, 12)
+        .background(Color.orange)
+        .transition(.move(edge: .top).combined(with: .opacity))
+    }
+    
+    func toggleTag(_ tag: String) {
+        if selectedTags.contains(tag) {
+            selectedTags.remove(tag)
+        } else {
+            selectedTags.insert(tag)
+        }
+    }
+}
+
+struct TagButton: View {
+    let tag: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(tag)
+                .font(.subheadline)
+                .fontWeight(isSelected ? .semibold : .regular)
+                .foregroundColor(isSelected ? .orange : .white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(isSelected ? Color.white : Color.white.opacity(0.2))
+                )
+        }
+    }
+}
+
 
 struct SidebarView: View {
     @Binding var showSidebar: Bool
@@ -219,25 +338,7 @@ struct SidebarView: View {
                     
                     Divider()
                         .padding(.vertical, 8)
-                    Button {} label: {
-                        HStack(spacing: 15) {
-                            Image(systemName: "person.2.fill")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
-                            
-                            Text("My Clubs")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 12)
-                    }
+
                     
                     Button {
                         showSidebar = false
@@ -261,31 +362,35 @@ struct SidebarView: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 12)
                     }
+                    if authManager.isAdmin{
+                        Button {
+                            showSidebar = false
+                            navigationPath.append("AddClub")
+                        } label: {
+                            HStack(spacing: 15) {
+                                Image(systemName: "person.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.orange)
+                                    .frame(width: 25)
+                                
+                                Text("Add Club")
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 12)
+                        }
+                    }
                     
                     Button {
                         showSidebar = false
-                        navigationPath.append("AddClub")
+                        navigationPath.append("savedClubs")
                     } label: {
-                        HStack(spacing: 15) {
-                            Image(systemName: "person.circle.fill")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
-                            
-                            Text("Add Club")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 12)
-                    }
-                    
-                    Button {} label: {
                         HStack(spacing: 15) {
                             Image(systemName: "bookmark.fill")
                                 .font(.title)
@@ -304,7 +409,10 @@ struct SidebarView: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 12)
                     }
-                    Button {} label: {
+                    Button {
+                        showSidebar = false
+                        navigationPath.append("settings")
+                    } label: {
                         HStack(spacing: 15) {
                             Image(systemName: "gear")
                                 .font(.title)
@@ -326,7 +434,10 @@ struct SidebarView: View {
                     
                     Divider()
                     
-                    Button {} label: {
+                    Button {
+                        showSidebar = false
+                        navigationPath.append("helpSupport")
+                    } label: {
                         HStack(spacing: 15) {
                             Image(systemName: "questionmark.circle")
                                 .font(.title)
