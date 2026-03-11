@@ -186,57 +186,45 @@ struct TabView: View {
     
 }
 
+
 struct Tagview: View {
     @Binding var selectedTags: Set<String>
     
-    let categoryTags = ["Competitive", "Non-competitive"]
+    let categoryTags = ["Competitive", "Non-Competitive"]
     let subjectTags = ["Math", "Science", "Reading", "History", "Business",
                        "Technology", "Art", "Fine Arts", "Speaking", "Health",
                        "Law", "Engineering", "Cultural"]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Competition Level")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(categoryTags, id: \.self) { tag in
-                            TagButton(
-                                tag: tag,
-                                isSelected: selectedTags.contains(tag),
-                                action: { toggleTag(tag) }
-                            )
-                        }
+            Text("Filter Tags:")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(categoryTags, id: \.self) { tag in
+                        TagButton(
+                            tag: tag,
+                            isSelected: selectedTags.contains(tag),
+                            action: { toggleTag(tag) }
+                        )
                     }
-                    .padding(.horizontal)
+                    
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                        .frame(width: 2, height: 40)
+                    
+                    ForEach(subjectTags, id: \.self) { tag in
+                        TagButton(
+                            tag: tag,
+                            isSelected: selectedTags.contains(tag),
+                            action: { toggleTag(tag) }
+                        )
+                    }
                 }
-            }
-            
-            Divider()
                 .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Subject Areas")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(subjectTags, id: \.self) { tag in
-                            TagButton(
-                                tag: tag,
-                                isSelected: selectedTags.contains(tag),
-                                action: { toggleTag(tag) }
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                }
             }
             
             if !selectedTags.isEmpty {
@@ -247,10 +235,18 @@ struct Tagview: View {
                         Image(systemName: "xmark.circle.fill")
                         Text("Clear All Filters")
                     }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(
+                        
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.white.opacity(0.4))
+                    )
                     .font(.caption)
                     .foregroundColor(.red)
-                    .padding(.horizontal)
+                    
                 }
+                .padding(.horizontal, 17)
             }
         }
         .padding(.vertical, 12)
@@ -287,7 +283,6 @@ struct TagButton: View {
         }
     }
 }
-
 
 struct SidebarView: View {
     @Binding var showSidebar: Bool

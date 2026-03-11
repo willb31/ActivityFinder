@@ -34,10 +34,12 @@ struct ContentView: View {
             if !selectedTags.isEmpty {
                 clubs = clubs.filter { club in
                     for tag in selectedTags {
-                        if tag == "Competitive" || tag == "Non-competitive" {
-                            if club.category.localizedCaseInsensitiveContains(tag) {
-                                return true
-                            }
+                        if tag == "Competitive" {
+                            return club.category.lowercased() == "competitive"
+                        }
+
+                        if tag == "Non-Competitive" {
+                            return club.category.lowercased() == "non-competitive"
                         } else {
                             if club.name.localizedCaseInsensitiveContains(tag) ||
                                 club.description.localizedCaseInsensitiveContains(tag) {
