@@ -118,6 +118,13 @@ import Firebase
             isAuthenticated = false
             isAdmin = false
     }
+    
+    func continueAsGuest() {
+        isAuthenticated = true
+        isAdmin = false
+       
+    }
+   
     func fetchClubs() {
         
             database.collection("clubs").addSnapshotListener { snapshot, error in

@@ -66,6 +66,21 @@ struct GoogleSignInView: View {
             }
             .padding(.horizontal, 40)
             
+            Button(action: {
+                authManager.continueAsGuest()
+            }) {
+                Text("Continue as Guest")
+                    .foregroundColor(.orange)
+                    .frame(maxWidth: 500)
+                    .frame(height: 50)
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.orange, lineWidth: 2)
+                    )
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal, 40)
             
             
             Spacer()
