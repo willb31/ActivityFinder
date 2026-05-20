@@ -143,6 +143,7 @@ import Firebase
                         timeCommitment: doc["timeCommitment"] as? String ?? "",
                         contactEmail: doc["contactEmail"] as? String ?? "",
                         instagram: doc["instagram"] as? String ?? "",
+                        tags: doc["Tag"] as? [String] ?? [],
                         
                     )
                     

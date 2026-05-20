@@ -22,36 +22,33 @@ struct ContentView: View {
     
     var filteredClubs: [Club] {
         var clubs = authManager.clubs
-            
-            if !searchText.isEmpty {
-                clubs = clubs.filter { club in
-                    club.name.localizedCaseInsensitiveContains(searchText) ||
-                    club.category.localizedCaseInsensitiveContains(searchText) ||
-                    club.description.localizedCaseInsensitiveContains(searchText)
-                }
+        
+        if !searchText.isEmpty {
+            clubs = clubs.filter { club in
+                club.name.localizedCaseInsensitiveContains(searchText) ||
+                club.category.localizedCaseInsensitiveContains(searchText) ||
+                club.description.localizedCaseInsensitiveContains(searchText)
             }
-            
-            if !selectedTags.isEmpty {
-                clubs = clubs.filter { club in
-                    for tag in selectedTags {
-                        if tag == "Competitive" {
-                            return club.category.lowercased() == "competitive"
-                        }
-
-                        if tag == "Non-Competitive" {
-                            return club.category.lowercased() == "non-competitive"
-                        } else {
-                            if club.name.localizedCaseInsensitiveContains(tag) ||
-                                club.description.localizedCaseInsensitiveContains(tag) {
-                                return true
-                            }
+        }
+        
+        if !selectedTags.isEmpty {
+            clubs = clubs.filter { club in
+                for tag in selectedTags {
+                    if tag == "Competitive" {
+                        if club.category.lowercased() == "competitive" { return true }
+                    } else if tag == "Non-Competitive" {
+                        if club.category.lowercased() == "non-competitive" { return true }
+                    } else {
+                        if club.tags.contains(where: { $0.localizedCaseInsensitiveCompare(tag) == .orderedSame }) {
+                            return true
                         }
                     }
-                    return false
                 }
+                return false
             }
-            
-            return clubs
+        }
+        
+        return clubs
     }
     
     var body: some View {
@@ -80,6 +77,8 @@ struct ContentView: View {
                                     ForEach(filteredClubs) { club in
                                         ClubCardView(club: club)
                                             .onTapGesture {
+                                                isSearching = false
+                                                showTags = false
                                                 navigationPath.append(club)
                                             }
                                     }                                   }
