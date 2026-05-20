@@ -540,10 +540,22 @@ struct ClubDetailView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                     HStack{
-                        Text(club.contactEmail)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                        
+                        Button {
+                            let gmail = URL(string: "googlegmail://co?to=\(club.contactEmail)")!
+                            let mailto = URL(string: "mailto:\(club.contactEmail)")!
+                            if UIApplication.shared.canOpenURL(gmail) {
+                                UIApplication.shared.open(gmail)
+                            } else {
+                                UIApplication.shared.open(mailto)
+                            }
+                        } label: {
+                            Text(club.contactEmail)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.blue)
+                                .underline()
+                        }
+
                         Button {
                             UIPasteboard.general.string = "\(club.contactEmail)"
                             
