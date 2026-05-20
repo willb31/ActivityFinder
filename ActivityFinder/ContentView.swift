@@ -10,6 +10,7 @@ import Firebase
 struct ContentView: View {
     @State var showSidebar = false
     @State var authManager = AuthenticationManager()
+    @State var favoritesManager = FavoritesManager()
     @State var navigationPath = NavigationPath()
     @State var searchText = ""
     @State var isSearching = false
@@ -120,6 +121,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                .environment(favoritesManager)
                 .blur(radius: showSidebar ? 2 : 0)
                 .disabled(showSidebar)
                 

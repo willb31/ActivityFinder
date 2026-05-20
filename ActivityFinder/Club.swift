@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 
 
-struct Club: Identifiable, Hashable {
+struct Club: Identifiable, Hashable, Codable {
    
     
     

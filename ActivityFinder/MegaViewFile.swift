@@ -492,7 +492,7 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
-    @State var isFavorited = false
+    @Environment(FavoritesManager.self) var favoritesManager
     @State var copied = false
 
     var body: some View {
@@ -504,12 +504,10 @@ struct ClubDetailView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 4)
                
-                Button(action: {
-                         isFavorited.toggle()
-                     }) {
-                         Image(systemName: isFavorited ? "star.fill" : "star")
-                             .foregroundColor(isFavorited ? .yellow : .gray)
-                     }
+                Button(action: { favoritesManager.toggle(club) }) {
+                    Image(systemName: favoritesManager.isFavorited(club) ? "star.fill" : "star")
+                        .foregroundColor(favoritesManager.isFavorited(club) ? .yellow : .gray)
+                }
             }
             
             
