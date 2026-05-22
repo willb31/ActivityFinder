@@ -106,7 +106,7 @@ struct ContentView: View {
                         
                     }
                     .navigationDestination(for: Club.self) { club in
-                        ClubDetailView(club: club)
+                        ClubDetailView(club: club, authManager: authManager)
                     }
                     
                     .navigationDestination(for: String.self) { destination in

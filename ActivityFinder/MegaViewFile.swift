@@ -450,37 +450,31 @@ struct SidebarView: View {
 
 struct ClubDetailView: View {
     let club: Club
+    var authManager: AuthenticationManager
     @Environment(FavoritesManager.self) var favoritesManager
     @State var copied = false
+    @State var isEditing = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            
             HStack{
                 Text(club.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 4)
-               
                 Button(action: { favoritesManager.toggle(club) }) {
                     Image(systemName: favoritesManager.isFavorited(club) ? "star.fill" : "star")
                         .foregroundColor(favoritesManager.isFavorited(club) ? .yellow : .gray)
                 }
             }
-            
-            
             VStack(alignment: .leading, spacing: 6) {
                 Text("About the Club")
                     .font(.headline)
                     .foregroundStyle(.secondary)
-                
                 Text(club.description)
                     .font(.body)
-                
             }
-            
             VStack(alignment: .leading, spacing: 12) {
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Location")
                         .font(.caption)
@@ -489,7 +483,6 @@ struct ClubDetailView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Sponsor")
                         .font(.caption)
@@ -513,20 +506,12 @@ struct ClubDetailView: View {
                                 .foregroundColor(.blue)
                                 .underline()
                         }
-
                         Button {
                             UIPasteboard.general.string = "\(club.contactEmail)"
-                            
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                copied = true
-                            }
-                            
+                            withAnimation(.easeInOut(duration: 0.2)) { copied = true }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    copied = false
-                                }
+                                withAnimation(.easeInOut(duration: 0.2)) { copied = false }
                             }
-                            
                         } label: {
                             Image(systemName: copied ? "checkmark" : "doc.on.doc")
                                 .scaledToFit()
@@ -538,7 +523,6 @@ struct ClubDetailView: View {
                         }
                     }
                 }
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Category")
                         .font(.caption)
@@ -555,21 +539,31 @@ struct ClubDetailView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
-                
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            
-            
             Spacer()
         }
         .padding()
         .navigationTitle("Club Details")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if authManager.isAdmin {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { isEditing = true } label: {
+                        Image(systemName: "pencil")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $isEditing) {
+            EditClubView(club: club)
+        }
     }
 }
+
 #Preview{
     ContentView()
 }
@@ -592,3 +586,124 @@ struct CalendarView: View {
         }
 }
 
+
+struct EditClubView: View {
+    let club: Club
+    @Environment(\.dismiss) var dismiss
+    @State var name: String
+    @State var description: String
+    @State var location: String
+    @State var advisorName: String
+    @State var contactEmail: String
+    @State var category: String
+    @State var timeCommitment: String
+    @State var instagram: String
+    @State var isSaving = false
+    @State var showSuccess = false
+    let database = Firestore.firestore()
+
+    init(club: Club) {
+        self.club = club
+        _name = State(initialValue: club.name)
+        _description = State(initialValue: club.description)
+        _location = State(initialValue: club.location)
+        _advisorName = State(initialValue: club.advisorName)
+        _contactEmail = State(initialValue: club.contactEmail)
+        _category = State(initialValue: club.category)
+        _timeCommitment = State(initialValue: club.timeCommitment)
+        _instagram = State(initialValue: club.instagram)
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Group {
+                        fieldLabel("Club Name")
+                        TextField("Club Name", text: $name)
+                            .textFieldStyle(.roundedBorder)
+                        fieldLabel("Description")
+                        TextField("Description", text: $description, axis: .vertical)
+                            .textFieldStyle(.roundedBorder)
+                            .lineLimit(4...8)
+                        fieldLabel("Location")
+                        TextField("Location", text: $location)
+                            .textFieldStyle(.roundedBorder)
+                        fieldLabel("Advisor Name")
+                        TextField("Advisor Name", text: $advisorName)
+                            .textFieldStyle(.roundedBorder)
+                        fieldLabel("Contact Email")
+                        TextField("Contact Email", text: $contactEmail)
+                            .textFieldStyle(.roundedBorder)
+                            .keyboardType(.emailAddress)
+                            .autocorrectionDisabled()
+                    }
+                    Group {
+                        fieldLabel("Category")
+                        TextField("Category", text: $category)
+                            .textFieldStyle(.roundedBorder)
+                        fieldLabel("Time Commitment")
+                        TextField("Time Commitment", text: $timeCommitment)
+                            .textFieldStyle(.roundedBorder)
+                        fieldLabel("Instagram")
+                        TextField("Instagram Handle", text: $instagram)
+                            .textFieldStyle(.roundedBorder)
+                            .autocorrectionDisabled()
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("Edit Club")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") { save() }
+                        .disabled(isSaving)
+                }
+            }
+            .overlay {
+                if showSuccess {
+                    Text("Saved!")
+                        .padding()
+                        .background(.green.opacity(0.9))
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .transition(.scale.combined(with: .opacity))
+                }
+            }
+        }
+    }
+
+    func fieldLabel(_ text: String) -> some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+    }
+
+    func save() {
+        isSaving = true
+        let data: [String: Any] = [
+            "_clubName": name,
+            "description": description,
+            "location": location,
+            "advisorName": advisorName,
+            "contactEmail": contactEmail,
+            "category": category,
+            "timeCommitment": timeCommitment,
+            "instagram": instagram,
+            "updatedAt": FieldValue.serverTimestamp()
+        ]
+        database.collection("clubs").document(club.id).updateData(data) { error in
+            isSaving = false
+            if error == nil {
+                withAnimation { showSuccess = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    dismiss()
+                }
+            }
+        }
+    }
+}
