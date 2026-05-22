@@ -459,9 +459,11 @@ struct ClubDetailView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 4)
-                Button(action: { favoritesManager.toggle(club) }) {
-                    Image(systemName: favoritesManager.isFavorited(club) ? "star.fill" : "star")
-                        .foregroundColor(favoritesManager.isFavorited(club) ? .yellow : .gray)
+                if authManager.user?.displayName != nil{
+                    Button(action: { favoritesManager.toggle(club) }) {
+                        Image(systemName: favoritesManager.isFavorited(club) ? "star.fill" : "star")
+                            .foregroundColor(favoritesManager.isFavorited(club) ? .yellow : .gray)
+                    }
                 }
             }
             VStack(alignment: .leading, spacing: 6) {
