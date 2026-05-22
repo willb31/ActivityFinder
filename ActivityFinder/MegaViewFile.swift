@@ -20,17 +20,12 @@ struct ClubCardView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             HStack{
-                if UIImage(named: club.name) != nil {
-                    Image(club.name)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150,height: 150, alignment: .center)
-                } else {
+             
                     Image("DefaultClub")
                         .resizable()
                         .scaledToFill()
                         .frame(width: 150,height: 150)
-                }
+                
                 VStack(alignment: .leading, spacing: 8) {
                     HStack{
                         Text(club.name)
