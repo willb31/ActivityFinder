@@ -34,18 +34,20 @@ struct ContentView: View {
         
         if !selectedTags.isEmpty {
             clubs = clubs.filter { club in
-                for tag in selectedTags {
-                    if tag == "Competitive" {
-                        if club.category.lowercased() == "competitive" { return true }
-                    } else if tag == "Non-Competitive" {
-                        if club.category.lowercased() == "non-competitive" { return true }
-                    } else {
-                        if club.tags.contains(where: { $0.localizedCaseInsensitiveCompare(tag) == .orderedSame }) {
-                            return true
-                        }
-                    }
+                let categoryTags = selectedTags.filter { $0 == "Competitive" || $0 == "Non-Competitive" }
+                let subjectTags = selectedTags.filter { $0 != "Competitive" && $0 != "Non-Competitive" }
+
+                let categoryMatch = categoryTags.isEmpty || categoryTags.contains { tag in
+                    tag == "Competitive"
+                        ? club.category.lowercased() == "competitive"
+                        : club.category.lowercased() == "non-competitive"
                 }
-                return false
+
+                let subjectMatch = subjectTags.isEmpty || subjectTags.contains { tag in
+                    club.tags.contains(where: { $0.localizedCaseInsensitiveCompare(tag) == .orderedSame })
+                }
+
+                return categoryMatch && subjectMatch
             }
         }
         

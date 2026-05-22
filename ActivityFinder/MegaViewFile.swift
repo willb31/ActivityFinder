@@ -95,7 +95,6 @@ struct ClubCardView: View {
     }
 }
 struct TabView: View {
-    @State var authManager = AuthenticationManager()
     @Binding var showSidebar: Bool
     @Binding var searchText: String
     @Binding var showTags: Bool
@@ -286,7 +285,7 @@ struct TagButton: View {
 
 struct SidebarView: View {
     @Binding var showSidebar: Bool
-    @State var authManager: AuthenticationManager
+    var authManager: AuthenticationManager
     @Binding var navigationPath: NavigationPath
     @State var showAlert = false
     var body: some View {

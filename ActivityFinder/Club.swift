@@ -28,7 +28,7 @@ struct Club: Identifiable, Hashable, Codable {
     var instagram: String
     var tags: [String]
     var clubID: String {
-           return id ?? ""
+           return id
        }
     
 }
