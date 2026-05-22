@@ -17,6 +17,7 @@ import Firebase
     var user: User?
     var isAuthenticated = false
     var isAdmin = false
+    var isSuperAdmin = false
     var clubs: [Club] = []
     var database: Firestore {
             Firestore.firestore()
@@ -93,6 +94,7 @@ import Firebase
                     "lastName": lastName,
                     "email": user.email ?? "",
                     "isAdmin": false,
+                    "isSuperAdmin": false,
                 ]
                 
                 userReference.setData(userData) { error in
@@ -108,6 +110,7 @@ import Firebase
             if let document = document, document.exists {
                 let data = document.data()
                 self.isAdmin = data?["isAdmin"] as? Bool ?? false
+                self.isSuperAdmin = data?["isSuperAdmin"] as? Bool ?? false
             }
         }
     }
@@ -117,6 +120,7 @@ import Firebase
             user = nil
             isAuthenticated = false
             isAdmin = false
+            isSuperAdmin = false
     }
     
     func continueAsGuest() {

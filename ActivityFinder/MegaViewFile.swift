@@ -552,15 +552,20 @@ struct ClubDetailView: View {
         .navigationTitle("Club Details")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if authManager.isAdmin {
+            let canEdit = authManager.isSuperAdmin ||
+                (authManager.isAdmin &&
+                 authManager.user?.email?.lowercased() == club.contactEmail.lowercased())
+            if canEdit {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
                         Button { isEditing = true } label: {
                             Image(systemName: "pencil")
                         }
-                        Button { showDeleteAlert = true } label: {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
+                        if authManager.isSuperAdmin {
+                            Button { showDeleteAlert = true } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
                         }
                     }
                 }
