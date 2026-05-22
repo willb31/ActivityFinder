@@ -82,6 +82,8 @@ struct ContentView: View {
                                             .onTapGesture {
                                                 isSearching = false
                                                 showTags = false
+                                                searchText = ""
+                                                selectedTags.removeAll()
                                                 navigationPath.append(club)
                                             }
                                     }                                   }
