@@ -37,7 +37,7 @@ struct AddClubView: View {
                     .textFieldStyle(.roundedBorder)
                 
                 
-                Text("Loaction")
+                Text("Location")
                 TextField("Location", text: $location)
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
@@ -50,7 +50,7 @@ struct AddClubView: View {
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
                 
-                Text("Number of Memebers")
+                Text("Number of Members")
                 TextField("Number of Members", text: $numOfMembers)
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.roundedBorder)
