@@ -335,28 +335,7 @@ struct SidebarView: View {
                         .padding(.vertical, 8)
 
                     
-                    Button {
-                        showSidebar = false
-                        navigationPath.append("Calendar")
-                    } label: {
-                        HStack(spacing: 15) {
-                            Image(systemName: "calendar")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
-                            
-                            Text("Calendar")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 12)
-                    }
+                   
                     if authManager.isAdmin{
                         Button {
                             showSidebar = false
@@ -382,51 +361,31 @@ struct SidebarView: View {
                         }
                     }
                     
-                    Button {
-                        showSidebar = false
-                        navigationPath.append("savedClubs")
-                    } label: {
-                        HStack(spacing: 15) {
-                            Image(systemName: "bookmark.fill")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
-                            
-                            Text("Saved")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
+                    if authManager.user?.displayName != nil{
+                        Button {
+                            showSidebar = false
+                            navigationPath.append("savedClubs")
+                        } label: {
+                            HStack(spacing: 15) {
+                                Image(systemName: "bookmark.fill")
+                                    .font(.title)
+                                    .foregroundColor(.orange)
+                                    .frame(width: 25)
+                                
+                                Text("Saved")
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 12)
                         }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 12)
+                        
                     }
-                    Button {
-                        showSidebar = false
-                        navigationPath.append("settings")
-                    } label: {
-                        HStack(spacing: 15) {
-                            Image(systemName: "gear")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .frame(width: 25)
-                            
-                            Text("Settings")
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 12)
-                    }
-                    
                     Divider()
                     
                     Button {
