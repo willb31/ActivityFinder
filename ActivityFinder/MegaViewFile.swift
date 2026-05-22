@@ -452,8 +452,10 @@ struct ClubDetailView: View {
     let club: Club
     var authManager: AuthenticationManager
     @Environment(FavoritesManager.self) var favoritesManager
+    @Environment(\.dismiss) var dismiss
     @State var copied = false
     @State var isEditing = false
+    @State var showDeleteAlert = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -552,14 +554,34 @@ struct ClubDetailView: View {
         .toolbar {
             if authManager.isAdmin {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { isEditing = true } label: {
-                        Image(systemName: "pencil")
+                    HStack {
+                        Button { isEditing = true } label: {
+                            Image(systemName: "pencil")
+                        }
+                        Button { showDeleteAlert = true } label: {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
             }
         }
         .sheet(isPresented: $isEditing) {
             EditClubView(club: club)
+        }
+        .alert("Remove Club?", isPresented: $showDeleteAlert) {
+            Button("Remove", role: .destructive) { deleteClub() }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("This will permanently remove \(club.name) from the app.")
+        }
+    }
+
+    func deleteClub() {
+        Firestore.firestore().collection("clubs").document(club.id).delete { error in
+            if error == nil {
+                dismiss()
+            }
         }
     }
 }
